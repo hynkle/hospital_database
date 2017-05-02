@@ -1,9 +1,36 @@
-# example ruby code
+require "sequel"
+require "securerandom"
 
-# class Palindrome
+module Patient
 
-#   def is_word?(user_input)
-#     user_input.match?(/[aeiouy]+/i)
-#   end
+  def self.add(name, birthday)
+    patient_id = SecureRandom.uuid
+    DB[:patients].insert(patient_id, name, birthday)
+    patient_id
+  end
 
-# end
+  def self.patients_of(doctor_id)
+    #list of patients assigned to doctor using id
+  end
+
+end
+
+module Doctor
+
+  def self.add(doctor_id, name, specialty)
+    #name & specialty
+  end
+
+  def self.assign(doctor_id, patient_id)
+    #assign doctor to patient
+  end
+
+  def self.by_specialty(specialty)
+    #list of doctors based on given specialty
+    #specialties should be their own table
+  end
+
+  def self.alphabetical_with_number_of_patients
+    #alphabetical list of doctors with cooresponding number of patients
+  end
+end

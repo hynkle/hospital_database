@@ -5,6 +5,8 @@ require 'pry'
 
 also_reload('lib/**/*.rb')
 
+DB = Sequel.connect("postgres://Guest@localhost/hospital")
+
 get('/') do
   erb(:index)
 end

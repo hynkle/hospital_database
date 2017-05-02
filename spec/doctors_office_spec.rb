@@ -1,19 +1,17 @@
 require "doctors_office"
 require "rspec"
 require "pry"
+require "sequel"
 
+DB = Sequel.connect("postgres://Guest@localhost/hospital_test")
 
-# example project spec
+describe "Patient" do
 
-# describe 'Palindrome#isWord?' do
-#   let(:word) { Palindrome.new }
+  describe ".add" do
+    it "adds a patient record to the database" do
+      Patient.add("Francis Bacon", "1867-01-01")
+      expect(DB[:patients].first[:name]).to eq "Francis Bacon"
+    end
+  end
 
-#   it "returns true if the word has at least one vowel" do
-#     expect(word.is_word?("word")).to eq true
-#   end
-
-#   it "returns false if the word does not have a vowel" do
-#     expect(word.is_word?("wrd")).to eq false
-#   end
-
-# end
+end
