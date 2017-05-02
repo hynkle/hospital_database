@@ -49,4 +49,13 @@ describe "Doctor" do
     end
   end
 
+  describe ".by_specialty" do
+    it "returns a list of doctors for a given specialty" do
+      doctor_id = Doctor.add("Dr. Kojisan", "heart surgeon")
+      doctor_hash = Doctor.by_specialty("heart surgeon")
+      expect(doctor_hash[0][:specialty_id]).to(eq("9ce3257c-4fc7-4a2c-b1c9-1a0671785026"))
+    end
+  end
+
+
 end
