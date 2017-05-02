@@ -9,7 +9,6 @@ RSpec.configure do |config|
   config.after(:each) do
     DB[:patients].delete
     DB[:doctors].delete
-    DB[:doctor_specialty].delete
   end
 end
 
@@ -37,8 +36,7 @@ describe "Doctor" do
   describe ".add" do
     it "adds a Doctor to the database" do
       doctor_id = Doctor.add("Dr. Kojisan", "heart surgeon")
-      query = DB["SELECT specialty FROM doctor_specialty WHERE doctor_id = '#{doctor_id}'"].first[:specialty]
-      expect(query).to(eq("heart surgeon"))
+      expect(DB[:doctors].where(:id => doctor_id).first[:specialty_id]).to eq "9ce3257c-4fc7-4a2c-b1c9-1a0671785026"
     end
   end
 

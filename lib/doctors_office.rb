@@ -19,9 +19,8 @@ module Doctor
 
   def self.add(name, specialty)
     doctor_id = SecureRandom.uuid
-    DB[:doctors].insert(doctor_id, name)
-    uuid = SecureRandom.uuid
-    DB[:doctor_specialty].insert(uuid, doctor_id, specialty)
+    specialty_id = DB["select id from specialties where specialty = '#{specialty}'"].first[:id]
+    DB[:doctors].insert(doctor_id, name, specialty_id)
     doctor_id
   end
 
