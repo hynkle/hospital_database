@@ -17,8 +17,12 @@ end
 
 module Doctor
 
-  def self.add(doctor_id, name, specialty)
-    #name & specialty
+  def self.add(name, specialty)
+    doctor_id = SecureRandom.uuid
+    DB[:doctors].insert(doctor_id, name)
+    uuid = SecureRandom.uuid
+    DB[:doctor_specialty].insert(uuid, doctor_id, specialty)
+    doctor_id
   end
 
   def self.assign(doctor_id, patient_id)

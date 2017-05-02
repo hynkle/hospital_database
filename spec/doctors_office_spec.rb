@@ -15,3 +15,22 @@ describe "Patient" do
   end
 
 end
+
+
+describe "Doctor" do
+
+  describe ".add" do
+    it "adds a Doctor to the database" do
+      Doctor.add("Dr. Kojisan", "heart surgeon")
+      expect(DB[:doctors].first[:name]).to(eq("Dr. Kojisan"))
+    end
+  end
+
+  describe ".add" do
+    it "adds a Doctor to the database" do
+      Doctor.add("Dr. Kojisan", "heart surgeon")
+      expect(DB[:doctor_specialty].first[:specialty]).to(eq("heart surgeon"))
+    end
+  end
+
+end
