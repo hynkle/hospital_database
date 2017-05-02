@@ -1,0 +1,8 @@
+<h3>Doctors by specialty: <%= @specialty %> </h3>
+
+<% @doctors.each do |doc| %>
+  <li><% doc[:name] %></li>
+<% end %>
+
+<hr>
+<a href="/patient_home" class="btn btn-info">Home</a>

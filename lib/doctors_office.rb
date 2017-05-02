@@ -9,8 +9,9 @@ module Patient
     patient_id
   end
 
+  #list of patients assigned to doctor using id
   def self.patients_of(doctor_id)
-    #list of patients assigned to doctor using id
+    DB[:patients].where(:doctor_id => doctor_id).all
   end
 
 end
@@ -38,7 +39,8 @@ module Doctor
   def self.alphabetical_with_number_of_patients
     doctor_with_patient_number = []
     DB["select * from doctors order by name"].all.each do |doctor|
-      number_of_patients = DB[:patients].where(:doctor_id => doctor[:id]).all.length
+      number_of_patients = Patient.patients_of(doctor[:id]).length
+# binding.pry
       doctor_with_patient_number.push([doctor[:name], number_of_patients])
     end
     doctor_with_patient_number

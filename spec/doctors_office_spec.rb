@@ -21,11 +21,16 @@ describe "Patient" do
     end
   end
 
-  # describe ".patients_of" do
-  #   it "" do
-  #
-  #   end
-  # end
+  describe ".patients_of" do
+    it "returns a list of patients for a given doctor" do
+      doctor_id = Doctor.add("Dr. Kojisan", "heart surgeon")
+      patient_id1 = Patient.add("Francis Bacon", "1867-01-01")
+      Doctor.assign(doctor_id, patient_id1)
+      patient_id2 = Patient.add("Parker Posey", "1979-02-02")
+      Doctor.assign(doctor_id, patient_id2)
+      expect(Patient.patients_of(doctor_id).length).to eq 2
+    end
+  end
 
 end
 

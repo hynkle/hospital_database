@@ -1,0 +1,31 @@
+<h1>Admin</h2>
+<h3>Add New Doctor</h3>
+<form action="/add/doctor" method="post">
+  <div class="form-group">
+    <label for="doctor-name">Doctor Name</label>
+    <input name ="doctor-name" type="text" class="form-control">
+
+    <label for="doctor-specialty">Doctor Specialty</label>
+    <select name="doctor-specialty" id="doctor-specialty" class="form-control">
+      <option value="brain surgeon">Brain Surgeon</option>
+      <option value="heart surgeon">Heart Surgeon</option>
+      <option value="pediatrician">Pediatrician</option>
+      <option value="orthodontist">Orthodontist</option>
+    </select>
+
+  </div>
+  <button type="submit" class="btn btn-success">Add Doctor</button>
+</form>
+<br>
+<a href="/doctor/list" class="btn btn-info">Doctor List</a>
+<br>
+<h3>Add New Patient</h3>
+<form action="/add/patient" method="post">
+  <div class="form-group">
+    <label for="patient-name">Patient Name</label>
+    <input name ="patient-name" type="text" class="form-control" id="patient-name">
+    <label for="patient-birthday">Patient Birthday</label><br>
+    <input type="date" name="birthday" value="<%=@todays_date%>" class="form-control">
+  </div>
+  <button type="submit" name="button" class="btn btn-success">Add Patient</button>
+</form>

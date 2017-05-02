@@ -1,0 +1,7 @@
+<h2>Doctors: Number of Patients</h2>
+
+<% @doctor_list.each do |doctor| %>
+  <%= "<h3>#{doctor[0]}: #{doctor[1]}</h3>" %>
+<% end %>
+<br>
+<a href="/admin_home" class="btn btn-info">Admin Home</a>

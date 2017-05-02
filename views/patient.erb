@@ -1,0 +1,7 @@
+<h3>Doctor specialty options</h3>
+<% @specialties_list.each do |specialty| %>
+  <li><a href="/specialties_by_doctor/<%= specialty[:specialty] %>"><%= specialty[:specialty] %></a></li>
+<% end %>
+
+<hr>
+<a href="/" class="btn btn-info">Home</a>
