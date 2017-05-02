@@ -34,8 +34,14 @@ module Doctor
     DB[:doctors].where(:specialty_id => specialty_id).all
   end
 
+  #alphabetical list of doctors with cooresponding number of patients
   def self.alphabetical_with_number_of_patients
-    #alphabetical list of doctors with cooresponding number of patients
+    doctor_with_patient_number = []
+    DB["select * from doctors order by name"].all.each do |doctor|
+      number_of_patients = DB[:patients].where(:doctor_id => doctor[:id]).all.length
+      doctor_with_patient_number.push([doctor[:name], number_of_patients])
+    end
+    doctor_with_patient_number
   end
 
   private

@@ -21,6 +21,12 @@ describe "Patient" do
     end
   end
 
+  # describe ".patients_of" do
+  #   it "" do
+  #
+  #   end
+  # end
+
 end
 
 
@@ -54,6 +60,18 @@ describe "Doctor" do
       doctor_id = Doctor.add("Dr. Kojisan", "heart surgeon")
       doctor_hash = Doctor.by_specialty("heart surgeon")
       expect(doctor_hash[0][:specialty_id]).to(eq("9ce3257c-4fc7-4a2c-b1c9-1a0671785026"))
+    end
+  end
+
+  describe ".alphabetical_with_number_of_patients" do
+    it "returns a list of doctors in aphabetical order and their number of patients" do
+      doctor_id1 = Doctor.add("Dr. Kojisan", "heart surgeon")
+      patient_id1 = Patient.add("Francis Bacon", "1867-01-01")
+      doctor_id2 = Doctor.add("Dr. Anderson", "brain surgeon")
+      patient_id2 = Patient.add("Parker Posey", "1979-02-02")
+      Doctor.assign(doctor_id1, patient_id1)
+      Doctor.assign(doctor_id2, patient_id2)
+      expect(Doctor.alphabetical_with_number_of_patients).to eq [["Dr. Anderson", 1], ["Dr. Kojisan", 1]]
     end
   end
 
