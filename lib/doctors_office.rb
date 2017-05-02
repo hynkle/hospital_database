@@ -25,7 +25,7 @@ module Doctor
   end
 
   def self.assign(doctor_id, patient_id)
-    #assign doctor to patient
+    DB.run("update patients set doctor_id = '#{doctor_id}' where id = '#{patient_id}'")
   end
 
   def self.by_specialty(specialty)

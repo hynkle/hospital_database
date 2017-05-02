@@ -42,7 +42,10 @@ describe "Doctor" do
 
   describe ".assign" do
     it "assigns a doctor to a patient in the database" do
-
+      doctor_id = Doctor.add("Dr. Kojisan", "heart surgeon")
+      patient_id = Patient.add("Francis Bacon", "1867-01-01")
+      Doctor.assign(doctor_id, patient_id)
+      expect(DB[:patients].where(:id => patient_id).first[:doctor_id]).to eq doctor_id
     end
   end
 
