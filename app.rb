@@ -6,7 +6,7 @@ require 'pry'
 
 also_reload('lib/**/*.rb')
 
-DB = Sequel.connect("postgres://Guest@localhost/hospital")
+DB = Sequel.connect(ENV.fetch('DATABASE_URL'))
 
 get('/') do
   erb(:index)

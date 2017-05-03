@@ -5,7 +5,7 @@ module Patient
 
   def self.add(name, birthday)
     patient_id = SecureRandom.uuid
-    DB[:patients].insert(patient_id, name, birthday)
+    DB[:patients].insert(id: patient_id, name: name, birthday: birthday)
     patient_id
   end
 
