@@ -3,7 +3,7 @@ require "rspec"
 require "pry"
 require "sequel"
 
-DB = Sequel.connect("postgres://Guest@localhost/hospital_test")
+DB = Sequel.connect(ENV.fetch('DATABASE_URL'))
 
 RSpec.configure do |config|
   config.after(:each) do

@@ -1,12 +1,14 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sequel'
+require 'pry'
+
+DB = Sequel.connect(ENV.fetch('DATABASE_URL'))
 require './lib/doctors_office'
 require 'pry'
 
 also_reload('lib/**/*.rb')
 
-DB = Sequel.connect(ENV.fetch('DATABASE_URL'))
 
 get('/') do
   erb(:index)

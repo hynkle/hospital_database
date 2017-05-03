@@ -1,46 +1,47 @@
 require "sequel"
 require "securerandom"
 
-module Patient
+# module Patient
+
+
+class Patient < Sequel::Model
 
   def self.add(name, birthday)
-    patient_id = SecureRandom.uuid
-    DB[:patients].insert(id: patient_id, name: name, birthday: birthday)
-    patient_id
+    record = create(name: name, birthday: birthday)
+    record.id
   end
 
-  #list of patients assigned to doctor using id
   def self.patients_of(doctor_id)
-    DB[:patients].where(:doctor_id => doctor_id).all
+    where(doctor_id: doctor_id).all
   end
 
 end
 
-module Doctor
+class Doctor < Sequel::Model
 
   def self.add(name, specialty)
-    doctor_id = SecureRandom.uuid
-    specialty_id = self.get_specialty_id(specialty)
-    DB[:doctors].insert(doctor_id, name, specialty_id)
-    doctor_id
+    specialty_id = get_specialty_id(specialty)
+    record = create(name: name, specialty_id: specialty_id)
+    record.id
   end
 
   def self.assign(doctor_id, patient_id)
-    DB.run("update patients set doctor_id = '#{doctor_id}' where id = '#{patient_id}'")
+    patient = Patient.find(patient_id)
+    patient.doctor_id = doctor_id
+    patient.save!
   end
 
   #list of doctors based on given specialty
   def self.by_specialty(specialty)
-    specialty_id = self.get_specialty_id(specialty)
-    DB[:doctors].where(:specialty_id => specialty_id).all
+    specialty_id = get_specialty_id(specialty)
+    where(specialty_id: specialty_id).all
   end
 
   #alphabetical list of doctors with cooresponding number of patients
   def self.alphabetical_with_number_of_patients
     doctor_with_patient_number = []
-    DB["select * from doctors order by name"].all.each do |doctor|
+    order(:name).all.each do |doctor|
       number_of_patients = Patient.patients_of(doctor[:id]).length
-# binding.pry
       doctor_with_patient_number.push([doctor[:name], number_of_patients])
     end
     doctor_with_patient_number
@@ -48,8 +49,12 @@ module Doctor
 
   private
 
-  def self.get_specialty_id(specialty)
-    DB["select id from specialties where specialty = '#{specialty}'"].first[:id]
+  def self.get_specialty_id(specialty_name)
+    Specialty.where(specialty: specialty_name).first.id
   end
+
+end
+
+class Specialty < Sequel::Model
 
 end
