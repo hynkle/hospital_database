@@ -6,6 +6,8 @@ require "securerandom"
 
 class Patient < Sequel::Model
 
+  many_to_one :doctor
+
   def self.add(name, birthday)
     record = create(name: name, birthday: birthday)
     record.id
@@ -19,8 +21,11 @@ end
 
 class Doctor < Sequel::Model
 
+  one_to_many :patients
+  many_to_one :specialty
+
   def self.add(name, specialty)
-    specialty_id = get_specialty_id(specialty)
+    specialty_id = Specialty.id_for_name(specialty)
     record = create(name: name, specialty_id: specialty_id)
     record.id
   end
@@ -33,7 +38,7 @@ class Doctor < Sequel::Model
 
   #list of doctors based on given specialty
   def self.by_specialty(specialty)
-    specialty_id = get_specialty_id(specialty)
+    specialty_id = Specialty.id_for_name(specialty)
     where(specialty_id: specialty_id).all
   end
 
@@ -47,14 +52,14 @@ class Doctor < Sequel::Model
     doctor_with_patient_number
   end
 
-  private
-
-  def self.get_specialty_id(specialty_name)
-    Specialty.where(specialty: specialty_name).first.id
-  end
-
 end
 
 class Specialty < Sequel::Model
+
+  one_to_many :doctors
+
+  def self.id_for_name(name)
+    Specialty.find_by(specialty: name).id
+  end
 
 end
